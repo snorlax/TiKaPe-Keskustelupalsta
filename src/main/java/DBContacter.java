@@ -70,4 +70,16 @@ public class DBContacter {
             return null;
         }
     }
+    public boolean update(String query) {
+        try {
+            Statement stmt= connection.createStatement();
+            int touchedRows = stmt.executeUpdate(query);
+            if (touchedRows >=1) {
+                return true;
+            } else { return false;}
+        } catch (Exception e) {
+            System.out.println("Tuli virhe DBContacter:update viestillä:\n" + e.getMessage());
+            return false;
+        }
+    }
 }
