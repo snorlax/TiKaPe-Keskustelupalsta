@@ -3,24 +3,18 @@ import java.sql.*;
 
 public class Main {
 
-    public static void main(String[] args) throws Exception {
-        Connection connection = DriverManager.getConnection("jdbc:sqlite:TikapeProjektiv0.db");
+    public static void main(String[] args) {
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:TikapeProjektiv0.db");
+            Statement stmt = connection.createStatement();
+            DBContacter c = new DBContacter(stmt);
 
-        Statement stmt = connection.createStatement();
+            c.testaaYhteys();
 
-        testaaYhteys(stmt);
-
-        connection.close();
-    }
-    
-    public static void testaaYhteys(Statement stmt) throws Exception {
-        ResultSet rs = stmt.executeQuery("SELECT 1;");
-        if (rs.next()) {
-            System.out.println("connection success");
+            connection.close();
+        } catch (Exception e) {
+            System.out.println("Tuli virhe Main:main viestillä:\n" + e.getMessage());
         }
-
-        stmt.close();
-        rs.close();
     }
-    
+
 }
