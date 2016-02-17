@@ -1,15 +1,14 @@
 import java.sql.*;
+import java.util.*;
 
 public class DBContacter {
     private String databaseName;
-    private Statement stmt;
     private Connection connection;
 
     public DBContacter(String databaseName) {
         this.databaseName = databaseName;
         try {
             this.connection = DriverManager.getConnection("jdbc:sqlite:TikapeProjektiv0.db");
-            this.stmt = connection.createStatement();
         } catch (Exception e) {
             System.out.println("Tuli virhe DBContacter:constructor(String) viestillä:\n" + e.getMessage());
         }
@@ -17,6 +16,7 @@ public class DBContacter {
     
     public void testaaYhteys() {
         try {
+            Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT 1;");
         if (rs.next()) {
             System.out.println("Yhteys tietokantaan pelaa! Jes :)");
@@ -29,12 +29,45 @@ public class DBContacter {
             System.out.println("Tuli virhe DBContacter:testaaYhteys viestillä:\n" + e.getMessage());
         }
     }
+    public void foreignKeytPaalle() {
+        try {
+            Statement stmt = connection.createStatement();
+            stmt.execute("PRAGMA foreign_keys = ON;");
+            stmt.close();
+            System.out.println("Foreign key -checkit päällä!");
+        
+        } catch (Exception e) {
+            System.out.println("Tuli virhe DBContacter:testaaYhteys viestillä:\n" + e.getMessage());
+        }
+    }
+    
 
     public void suljeYhteys() {
         try {
             connection.close();
         } catch (Exception e) {
             System.out.println("Tuli virhe DBContacter:suljeYhteys viestillä:\n" + e.getMessage());
+        }
+    }
+
+    
+    public ArrayList queryAndCollect(String query, Collector col) {
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            
+            ArrayList elements = new ArrayList<>();
+            
+            while(rs.next()) {
+                elements.add(col.collect(rs));
+            }
+            
+            stmt.close();
+            return elements;
+        
+        } catch (Exception e) {
+            System.out.println("Tuli virhe DBContacter:queryAndCollect kyselyllä:\n " + query + "\n ja viestillä:\n" + e.getMessage());
+            return null;
         }
     }
 }
