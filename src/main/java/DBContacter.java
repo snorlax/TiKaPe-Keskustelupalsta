@@ -8,7 +8,7 @@ public class DBContacter {
     public DBContacter(String databaseName) {
         this.databaseName = databaseName;
         try {
-            this.connection = DriverManager.getConnection("jdbc:sqlite:TikapeProjektiv0.db");
+            this.connection = DriverManager.getConnection(databaseName);
         } catch (Exception e) {
             System.out.println("Tuli virhe DBContacter:constructor(String) viestillä:\n" + e.getMessage());
         }
