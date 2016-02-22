@@ -22,6 +22,7 @@ public class Main {
             System.out.println(s);
         }
         c.suljeYhteys();
+        System.out.println("Yhteys suljettu.");
     }
 
 }
