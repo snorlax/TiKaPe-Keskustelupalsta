@@ -9,6 +9,7 @@ public class Main {
         c.testaaYhteys();
         c.foreignKeytPaalle(); System.out.println("");
         
+        
         //boolean b = c.update("INSERT INTO Viesti (Nickname, otsikko, sisalto, aika, avausviesti, ketjuId)"
         //        + " values ('testaaja', 'otsikkoni', 'sisaltoni', CURRENT_TIMESTAMP, 0, 1);");
         //System.out.println(b + "\n");
