@@ -21,8 +21,6 @@ public class Main {
         ArrayList<Ketju> ketjut = c.queryAndCollect("SELECT * FROM Ketju;", new KetjuCollector());
         ArrayList<Viesti> viestit = c.queryAndCollect("SELECT * FROM Viesti;", new ViestiCollector());
         
-        System.out.println("Testimuutos 3");
-        
         System.out.println("Kaikki alueet");
         for (String a : alueet) {
             System.out.println(a);
