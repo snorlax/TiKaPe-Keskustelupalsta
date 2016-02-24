@@ -33,6 +33,8 @@ public class Main {
             System.out.println(k);
         }
         
+        System.out.println("testi");
+        
         System.out.println("");
         
         System.out.println("Kaikki viestit:");
