@@ -10,17 +10,19 @@ public class ViestiDao {
     }
     
     //Alla olevistahan saa helposti viestimäärät ArrayList.size()
+    //Oletuksena viestit tulevat ORDER BY aika DESC -järjestettyinä
+    //Eli palautetun ArrayListin nollas jäsen on viimeisisin viesti!
     public ArrayList<Viesti> kaikkiViestit() {
-        return c.queryAndCollect("SELECT * FROM Viesti;", new ViestiCollector());
+        return c.queryAndCollect("SELECT * FROM Viesti ORDER BY aika DESC;", new ViestiCollector());
     }
     public ArrayList<Viesti> viestitKetjusta(int ketjuId) {
         return c.queryAndCollect("SELECT * FROM Viesti"
-                + "WHERE KetjuId = " + ketjuId + ";", new ViestiCollector());
+                + "WHERE KetjuId = " + ketjuId + " ORDER BY aika DESC;", new ViestiCollector());
     }
     public ArrayList<Viesti> viestitAlueelta(int alueId) {
         return c.queryAndCollect("SELECT * FROM Viesti, Ketju"
                 + "WHERE Vieti.KetjuId = Ketju.ketjuId AND Ketju.AlueId = "
-                + alueId + ";", new ViestiCollector());
+                + alueId + " ORDER BY aika DESC;", new ViestiCollector());
     }
     
     public boolean lisaaVastausviesti(int ketjuId, String otsikko,
