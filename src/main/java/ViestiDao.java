@@ -25,7 +25,7 @@ public class ViestiDao {
     
     public boolean lisaaVastausviesti(int ketjuId, String otsikko,
             String sisalto, String kayttajatunnus) {
-        //tähän testejä stringeille, että ovat kelvollisia?
+        //tähän testejä parametreille, että ovat kelvollisia?
         //ja palautettaisiin false, jos vääränlaisia. Vai aiemmin jo testit?
         
         return c.update("INSERT INTO Viesti (Otsikko, Sisalto, Nickname, aika, avausviesti)"

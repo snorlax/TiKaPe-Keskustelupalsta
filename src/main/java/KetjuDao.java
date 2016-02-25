@@ -16,4 +16,9 @@ public class KetjuDao {
     public ArrayList<Ketju> ketjutAlueelta(int alueId) {
         return c.queryAndCollect("SELECT * FROM Ketju WHERE alueID = " + alueId, new KetjuCollector());
     }
+    public boolean lisaaKetju(int alueId, String nimi) {
+        //testejä stringille/alueidlle?
+        return c.update("INSERT INTO Ketju (nimi, alueId) VALUES"
+                + " (" + nimi + ", " + alueId + ")");
+    }
 }
