@@ -17,12 +17,12 @@ public class Main {
 //                + " values (2,'Testiketju2',1);");
 //        System.out.println(d + "\n");
         
-        ArrayList<String> alueet = c.queryAndCollect("SELECT * FROM Alue;", new AlueCollector());
+        ArrayList<Alue> alueet = c.queryAndCollect("SELECT * FROM Alue;", new AlueCollector());
         ArrayList<Ketju> ketjut = c.queryAndCollect("SELECT * FROM Ketju;", new KetjuCollector());
         ArrayList<Viesti> viestit = c.queryAndCollect("SELECT * FROM Viesti;", new ViestiCollector());
         
         System.out.println("Kaikki alueet");
-        for (String a : alueet) {
+        for (Alue a : alueet) {
             System.out.println(a);
         }
         

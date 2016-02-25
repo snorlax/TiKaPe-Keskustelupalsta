@@ -5,9 +5,11 @@ import java.sql.ResultSet;
 public class AlueCollector implements Collector {
 
     @Override
-    public String collect(ResultSet rs) {
+    public Alue collect(ResultSet rs) {
         try {
-        return rs.getString("Nimi");
+        int id = rs.getInt("alueId");
+        String nimi = rs.getString("Nimi");
+        return new Alue(id, nimi);
         
         } catch (Exception e) {
             System.out.println("Tuli virhe AlueCollector:collect viestillä:\n" + e.getMessage());

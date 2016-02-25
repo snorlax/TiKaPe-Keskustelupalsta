@@ -10,10 +10,10 @@ public class ViestiCollector implements Collector {
         try {
         int id = rs.getInt("ViestiId");
         String nickname = rs.getString("Nickname");
-        String otsikko = rs.getString("Otsikko");
+        String otsikko = rs.getString("Otsikko"); // poistetaanko?
         String sisalto = rs.getString("sisalto");
         String aika = rs.getString("Aika");
-        boolean onkoAvausviesti = rs.getBoolean("Avausviesti");
+        boolean onkoAvausviesti = rs.getBoolean("Avausviesti"); //poistetaanko?
         return new Viesti(id, nickname, otsikko, sisalto, aika, onkoAvausviesti);
         
         } catch (Exception e) {

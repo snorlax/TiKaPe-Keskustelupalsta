@@ -6,18 +6,18 @@ import java.sql.Timestamp;
 public class Viesti {
     private int id;
     private String nickname;
-    private String otsikko;
+    private String otsikko; //poistetaanko otsikko?
     private String sisalto;
     private String aika;
-    private boolean onkoAvausviesti;
+    private boolean onkoAvausviesti; //poistetaanko?
 
     public Viesti(int id, String nickname, String otsikko, String sisalto, String aika, boolean onkoAvausviesti) {
         this.id = id;
         this.nickname = nickname;
-        this.otsikko = otsikko;
+        this.otsikko = otsikko; //poistetaanko?
         this.sisalto = sisalto;
         this.aika = aika;
-        this.onkoAvausviesti = onkoAvausviesti;
+        this.onkoAvausviesti = onkoAvausviesti; // poistetaanko?
     }
 
     public String getAika() {
