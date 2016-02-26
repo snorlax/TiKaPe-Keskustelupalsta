@@ -1,7 +1,5 @@
 
 import java.sql.ResultSet;
-import java.sql.Timestamp;
-
 
 public class ViestiCollector implements Collector {
 
@@ -10,11 +8,9 @@ public class ViestiCollector implements Collector {
         try {
         int id = rs.getInt("ViestiId");
         String nickname = rs.getString("Nickname");
-        String otsikko = rs.getString("Otsikko"); // poistetaanko?
         String sisalto = rs.getString("sisalto");
         String aika = rs.getString("Aika");
-        boolean onkoAvausviesti = rs.getBoolean("Avausviesti"); //poistetaanko?
-        return new Viesti(id, nickname, otsikko, sisalto, aika, onkoAvausviesti);
+        return new Viesti(id, nickname, sisalto, aika);
         
         } catch (Exception e) {
             System.out.println("Tuli virhe ViestiCollector:collect viestillä:\n" + e.getMessage());
