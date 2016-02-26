@@ -15,6 +15,7 @@ public class ViestiDao {
     public ArrayList<Viesti> kaikkiViestit() {
         return c.queryAndCollect("SELECT * FROM Viesti ORDER BY aika DESC;", new ViestiCollector());
     }
+
     public ArrayList<Viesti> kaikkiViestit(boolean kaannettyAikajarjestys) {
         if (kaannettyAikajarjestys) {
             return c.queryAndCollect("SELECT * FROM Viesti ORDER BY aika ASC;", new ViestiCollector());
@@ -22,19 +23,26 @@ public class ViestiDao {
             return c.queryAndCollect("SELECT * FROM Viesti ORDER BY aika DESC;", new ViestiCollector());
         }
     }
+    public Viesti viimeisinViestiPalstalta() {
+        return kaikkiViestit().get(0);
+    }
 
     public ArrayList<Viesti> viestitKetjusta(int ketjuId) {
         return c.queryAndCollect("SELECT * FROM Viesti"
                 + "WHERE KetjuId = " + ketjuId + " ORDER BY aika DESC;", new ViestiCollector());
     }
+
     public ArrayList<Viesti> viestitKetjusta(int ketjuId, boolean kaannettyAikajarjestys) {
         if (kaannettyAikajarjestys) {
             return c.queryAndCollect("SELECT * FROM Viesti"
-                + "WHERE KetjuId = " + ketjuId + " ORDER BY aika ASC;", new ViestiCollector());
+                    + "WHERE KetjuId = " + ketjuId + " ORDER BY aika ASC;", new ViestiCollector());
         } else {
             return c.queryAndCollect("SELECT * FROM Viesti"
-                + "WHERE KetjuId = " + ketjuId + " ORDER BY aika DESC;", new ViestiCollector());
+                    + "WHERE KetjuId = " + ketjuId + " ORDER BY aika DESC;", new ViestiCollector());
         }
+    }
+    public Viesti viimeisinViestiKetjusta(int KetjuId) {
+        return viestitKetjusta(KetjuId).get(0);
     }
 
     public ArrayList<Viesti> viestitAlueelta(int alueId) {
@@ -42,25 +50,32 @@ public class ViestiDao {
                 + "WHERE Vieti.KetjuId = Ketju.ketjuId AND Ketju.AlueId = "
                 + alueId + " ORDER BY aika DESC;", new ViestiCollector());
     }
+
     public ArrayList<Viesti> viestitAlueelta(int alueId, boolean kaannettyAikajarjestys) {
         if (kaannettyAikajarjestys) {
             return c.queryAndCollect("SELECT * FROM Viesti, Ketju"
-                + "WHERE Vieti.KetjuId = Ketju.ketjuId AND Ketju.AlueId = "
-                + alueId + " ORDER BY aika ASC;", new ViestiCollector());
+                    + "WHERE Vieti.KetjuId = Ketju.ketjuId AND Ketju.AlueId = "
+                    + alueId + " ORDER BY aika ASC;", new ViestiCollector());
         } else {
             return c.queryAndCollect("SELECT * FROM Viesti, Ketju"
-                + "WHERE Vieti.KetjuId = Ketju.ketjuId AND Ketju.AlueId = "
-                + alueId + " ORDER BY aika DESC;", new ViestiCollector());
+                    + "WHERE Vieti.KetjuId = Ketju.ketjuId AND Ketju.AlueId = "
+                    + alueId + " ORDER BY aika DESC;", new ViestiCollector());
         }
     }
+    public Viesti viimeisinViestiAlueelta(int AlueId) {
+        return viestitAlueelta(AlueId).get(0);
+    }
 
-    public boolean lisaaVastausviesti(int ketjuId, String otsikko,
-            String sisalto, String kayttajatunnus) {
-        //tähän testejä parametreille, että ovat kelvollisia?
-        //ja palautettaisiin false, jos vääränlaisia. Vai aiemmin jo testit?
+    public boolean lisaaVastausviesti(int ketjuId, String sisalto, String nickname) {
+        StringChecker sc = new StringChecker();
+        if (sc.puhdas(sisalto) && sc.puhdas(nickname)
+                && sc.notTooLong(sisalto, 2900) && sc.notTooLong(nickname, 45)) {
 
-        return c.update("INSERT INTO Viesti (Otsikko, Sisalto, Nickname, aika, avausviesti)"
-                + " VALUES (" + otsikko + ", " + sisalto + ", " + kayttajatunnus + ", "
-                + "CURRENT_TIMESTAMP, 0);");
+            return c.update("INSERT INTO Viesti (Nickname, sisalto, aika, ketjuId)"
+                    + " VALUES ('" + nickname + "', '" + sisalto + "', "
+                    + "CURRENT_TIMESTAMP, " + ketjuId + ");");
+        } else {
+            return false;
+        }
     }
 }
