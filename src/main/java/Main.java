@@ -9,12 +9,14 @@ public class Main {
         c.testaaYhteys();
         c.foreignKeytPaalle();
         System.out.println("");
-          
+        
+        tulostaKaikkiViestit(c);
+        
         c.suljeYhteys();
         System.out.println("\n\nYhteys suljettu.");
     }
     
-    public void tulostaKaikkiViestit(DBContacter c) {
+    public static void tulostaKaikkiViestit(DBContacter c) {
         ArrayList<Viesti> viestit = c.queryAndCollect("SELECT * FROM Viesti;", new ViestiCollector());
         System.out.println("Kaikki viestit:");
         for (Viesti s : viestit) {
@@ -22,7 +24,7 @@ public class Main {
         }
     }
     
-    public void tulostaKaikkiKetjut(DBContacter c) {
+    public static void tulostaKaikkiKetjut(DBContacter c) {
         ArrayList<Ketju> ketjut = c.queryAndCollect("SELECT * FROM Ketju;", new KetjuCollector());
         System.out.println("Kaikki ketjut");
         for (Ketju k : ketjut) {
@@ -30,7 +32,7 @@ public class Main {
         }
     }
     
-    public void tulostaKaikkiAlueet(DBContacter c) {
+    public static void tulostaKaikkiAlueet(DBContacter c) {
         ArrayList<Alue> alueet = c.queryAndCollect("SELECT * FROM Alue;", new AlueCollector());
         System.out.println("Kaikki alueet");
         for (Alue a : alueet) {
@@ -38,7 +40,7 @@ public class Main {
         }
     }
     
-    public void uusiViesti(DBContacter c) {
+    public static void uusiViesti(DBContacter c) {
         ViestiDao vd = new ViestiDao(c);
         boolean tulos = vd.lisaaVastausviesti(3, "testiketjun kolme avausviesti", "henri P");
         if (tulos) {
