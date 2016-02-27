@@ -1,3 +1,5 @@
+package foorumi.viesti;
+
 
 public class Viesti {
     private int id;

@@ -1,4 +1,14 @@
+package foorumi;
 
+
+import foorumi.viesti.ViestiDao;
+import foorumi.viesti.Viesti;
+import foorumi.viesti.ViestiCollector;
+import foorumi.ketju.KetjuCollector;
+import foorumi.ketju.Ketju;
+import foorumi.ketju.KetjuDao;
+import foorumi.alue.Alue;
+import foorumi.alue.AlueCollector;
 import java.sql.*;
 import java.util.ArrayList;
 import static spark.Spark.*;

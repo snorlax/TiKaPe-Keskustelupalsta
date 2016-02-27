@@ -1,4 +1,7 @@
+package foorumi.viesti;
 
+
+import foorumi.Collector;
 import java.sql.ResultSet;
 
 public class ViestiCollector implements Collector {

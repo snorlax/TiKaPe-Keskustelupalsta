@@ -1,3 +1,5 @@
+package foorumi;
+
 import java.sql.*;
 
 public interface Collector<T> {

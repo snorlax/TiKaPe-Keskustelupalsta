@@ -1,4 +1,7 @@
+package foorumi.alue;
 
+
+import foorumi.Collector;
 import java.sql.ResultSet;
 
 

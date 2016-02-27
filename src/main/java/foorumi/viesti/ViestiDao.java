@@ -1,4 +1,8 @@
+package foorumi.viesti;
 
+
+import foorumi.DBContacter;
+import foorumi.StringChecker;
 import java.util.ArrayList;
 
 public class ViestiDao {

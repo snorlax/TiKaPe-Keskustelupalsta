@@ -1,4 +1,7 @@
+package foorumi.ketju;
 
+
+import foorumi.DBContacter;
 import java.util.ArrayList;
 
 

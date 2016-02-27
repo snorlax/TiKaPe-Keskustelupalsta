@@ -1,13 +1,13 @@
+package foorumi.alue;
 
-public class Ketju {
+
+public class Alue {
     private int id;
     private String nimi;
-    private int alueId;
 
-    public Ketju(int id, String nimi, int alueId) {
+    public Alue(int id, String nimi) {
         this.id = id;
         this.nimi = nimi;
-        this.alueId = alueId;
     }
 
     public int getId() {
@@ -17,11 +17,10 @@ public class Ketju {
     public String getNimi() {
         return nimi;
     }
-    
 
     @Override
     public String toString() {
-        return nimi + "(" + id + ")";
+        return nimi + " (" + id + ")";
     }
     
     
