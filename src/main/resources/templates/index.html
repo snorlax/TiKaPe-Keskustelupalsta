@@ -1,0 +1,23 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Fyysikot voittaa aina käpistelijät</title>
+        <meta charset="utf-8" />
+    </head>
+
+    <body>
+        <h1>Fyysikko foorumit</h1>
+        
+        <h2 th:text="${kuvaus}">kuvaus</h2>
+        
+        <ul>
+            <li th:each="alueet: ${alueet}">
+                <span th:text="${alueet.id}">1</span> <span th:text="${alueet.nimi}"> Aluelista</span>
+            </li>
+        </ul>
+    
+    
+    
+    </body>
+</html>
