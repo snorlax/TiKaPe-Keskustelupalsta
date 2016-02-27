@@ -1,6 +1,11 @@
 
 import java.sql.*;
 import java.util.ArrayList;
+import static spark.Spark.*;
+import java.util.HashMap;
+import spark.ModelAndView;
+import spark.template.thymeleaf.ThymeleafTemplateEngine;
+
 
 public class Main {
 
@@ -10,12 +15,37 @@ public class Main {
         c.foreignKeytPaalle();
         System.out.println("");
         
-        tulostaKaikkiViestit(c);
+        //Spark osuus alkaa
+        get("/alueet", (req, res) -> {
+            HashMap m = new HashMap<>();
+            m.put("kuvaus", "Foorumin alueet");
+            m.put("alueet", getAlueet(c));
+            
+            return new ModelAndView(m, "index");
+        }, new ThymeleafTemplateEngine());
+
+        get("/ketjut", (req, res) -> {
+            KetjuDao kD = new KetjuDao(c);
+            HashMap m = new HashMap<>();
+            m.put("kuvaus", "Alueen X ketjut");
+            m.put("ketjut", kD.kaikkiKetjut());
+            
+            return new ModelAndView(m, "ketjut");
+        }, new ThymeleafTemplateEngine());
         
-        c.suljeYhteys();
-        System.out.println("\n\nYhteys suljettu.");
+        get("/viestit", (req, res) -> {
+            ViestiDao vD = new ViestiDao(c);
+            HashMap m = new HashMap<>();
+            m.put("kuvaus", "Ketjun X viestit");
+            m.put("viestit", vD.kaikkiViestit());
+            
+            return new ModelAndView(m, "viestit");
+        }, new ThymeleafTemplateEngine());
+        
+//        c.suljeYhteys();
+//        System.out.println("\n\nYhteys suljettu.");
     }
-    
+
     public static void tulostaKaikkiViestit(DBContacter c) {
         ArrayList<Viesti> viestit = c.queryAndCollect("SELECT * FROM Viesti;", new ViestiCollector());
         System.out.println("Kaikki viestit:");
@@ -23,7 +53,7 @@ public class Main {
             System.out.println(s);
         }
     }
-    
+
     public static void tulostaKaikkiKetjut(DBContacter c) {
         ArrayList<Ketju> ketjut = c.queryAndCollect("SELECT * FROM Ketju;", new KetjuCollector());
         System.out.println("Kaikki ketjut");
@@ -31,7 +61,7 @@ public class Main {
             System.out.println(k);
         }
     }
-    
+
     public static void tulostaKaikkiAlueet(DBContacter c) {
         ArrayList<Alue> alueet = c.queryAndCollect("SELECT * FROM Alue;", new AlueCollector());
         System.out.println("Kaikki alueet");
@@ -39,7 +69,7 @@ public class Main {
             System.out.println(a);
         }
     }
-    
+
     public static void uusiViesti(DBContacter c) {
         ViestiDao vd = new ViestiDao(c);
         boolean tulos = vd.lisaaVastausviesti(3, "testiketjun kolme avausviesti", "henri P");
@@ -48,6 +78,11 @@ public class Main {
         } else {
             System.out.println("Viestin lisäys ei onnistunut :( \n");
         }
+    }
+    
+    public static ArrayList<Alue> getAlueet(DBContacter c) {
+        ArrayList<Alue> alueet = c.queryAndCollect("SELECT * FROM Alue;", new AlueCollector());
+        return alueet;
     }
 
 }
