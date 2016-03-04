@@ -5,6 +5,7 @@ public class Ketju {
     private int id;
     private String nimi;
     private int alueId;
+    private String url;
 
     public Ketju(int id, String nimi, int alueId) {
         this.id = id;
@@ -18,6 +19,10 @@ public class Ketju {
 
     public String getNimi() {
         return nimi;
+    }
+
+    public String getUrl() {
+        return "http://localhost:4567/viestit?ketjuId=" + id;
     }
     
 

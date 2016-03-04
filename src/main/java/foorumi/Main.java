@@ -34,11 +34,38 @@ public class Main {
             return new ModelAndView(m, "index");
         }, new ThymeleafTemplateEngine());
 
+//        get("/ketjut", (req, res) -> {
+//            KetjuDao kD = new KetjuDao(c);
+//            HashMap m = new HashMap<>();
+//            m.put("kuvaus", "Alueen X ketjut");
+//            m.put("ketjut", kD.kaikkiKetjut());
+//            
+//            return new ModelAndView(m, "ketjut");
+//        }, new ThymeleafTemplateEngine());
+//        
+//        get("/viestit", (req, res) -> {
+//            ViestiDao vD = new ViestiDao(c);
+//            HashMap m = new HashMap<>();
+//            m.put("kuvaus", "Ketjun X viestit");
+//            m.put("viestit", vD.kaikkiViestit());
+//            
+//            return new ModelAndView(m, "viestit");
+//        }, new ThymeleafTemplateEngine());
+        
+        
         get("/ketjut", (req, res) -> {
             KetjuDao kD = new KetjuDao(c);
             HashMap m = new HashMap<>();
-            m.put("kuvaus", "Alueen X ketjut");
-            m.put("ketjut", kD.kaikkiKetjut());
+            int alueId = Integer.parseInt(req.queryParams("alueId"));
+            String alueenNimi = "";
+            for (Object alue : c.queryAndCollect("SELECT * FROM Alue", new AlueCollector())) {
+                Alue a = (Alue) alue;
+                if (a.getId() == alueId) {
+                    alueenNimi = a.getNimi();
+                }
+            }
+            m.put("kuvaus", "Alueen " + alueenNimi + " ketjut");
+            m.put("ketjut", kD.ketjutAlueelta(alueId));
             
             return new ModelAndView(m, "ketjut");
         }, new ThymeleafTemplateEngine());
@@ -46,12 +73,42 @@ public class Main {
         get("/viestit", (req, res) -> {
             ViestiDao vD = new ViestiDao(c);
             HashMap m = new HashMap<>();
-            m.put("kuvaus", "Ketjun X viestit");
-            m.put("viestit", vD.kaikkiViestit());
+            int ketjuId = Integer.parseInt(req.queryParams("ketjuId"));
+            String ketjnNimi = "";
+            for (Ketju k : new KetjuDao(c).kaikkiKetjut()) {
+                if (k.getId() == ketjuId) {
+                    ketjnNimi = k.getNimi();
+                }
+            }
+            m.put("kuvaus", "Ketjun " + ketjnNimi + " viestit");
+            m.put("viestit", vD.viestitKetjusta(ketjuId));
             
             return new ModelAndView(m, "viestit");
         }, new ThymeleafTemplateEngine());
         
+        get("/add", (req, res) -> {
+            int ketjuId = Integer.parseInt(req.queryParams("ketjuId"));
+            return "<form method=\"POST\" action=\"/add?ketjuId=" + ketjuId + "\">\n"
+                    + "Kirjoita viesti:<br/>\n"
+                    + "<input type=\"text\" name=\"sisalto\"/><br/>\n"
+                    + "Anna käyttäjänimesi:<br/>\n"
+                    + "<input type=\"text\" name=\"kayttis\"/><br/>\n"
+                    + "<input type=\"submit\" value=\"Lisää viesti\"/>\n"
+                    + "</form>";
+        });
+        post("/add", (req, res) -> {
+            int ketjuId = Integer.parseInt(req.queryParams("ketjuId"));
+            String sisalto = req.queryParams("sisalto");
+            String kayttis = req.queryParams("kayttis");
+            
+            ViestiDao vd = new ViestiDao(c);
+            vd.lisaaVastausviesti(ketjuId, sisalto, kayttis);
+
+            String linkinOsoite = "http://localhost:4567";
+                return "Lisättiin  syöte: " + sisalto + " t: " + kayttis + "<br/>"
+                    + "<br/> <a href=\"" + linkinOsoite + "/viestit?ketjuId=" + ketjuId + "\">Palaa viestisivulle</a>";
+            
+        });
 //        c.suljeYhteys();
 //        System.out.println("\n\nYhteys suljettu.");
     }

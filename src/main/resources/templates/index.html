@@ -1,7 +1,9 @@
 <h2 th:text="${kuvaus}">kuvaus</h2>
-
+<i>Kopioi osoiteriville haluamasi kohteen perässä oleva osoite siirtyäksesi sinne!</i>
 <ul>
     <li th:each="alueet: ${alueet}">
-        <span th:text="${alueet.id}">1</span> <span th:text="${alueet.nimi}"> Aluelista</span>
+        <span th:text="${alueet.nimi}">Alue</span>
+             <span th:text="${alueet.url}">AlueenURL</span>
+        
     </li>
 </ul>

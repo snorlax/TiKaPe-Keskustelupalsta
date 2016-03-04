@@ -13,7 +13,8 @@ public class ViestiCollector implements Collector {
         String nickname = rs.getString("Nickname");
         String sisalto = rs.getString("sisalto");
         String aika = rs.getString("Aika");
-        return new Viesti(id, nickname, sisalto, aika);
+        int ketjuId = rs.getInt("ketjuId");
+        return new Viesti(id, nickname, sisalto, aika, ketjuId);
         
         } catch (Exception e) {
             System.out.println("Tuli virhe ViestiCollector:collect viestillä:\n" + e.getMessage());

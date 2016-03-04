@@ -33,16 +33,16 @@ public class ViestiDao {
 
     public ArrayList<Viesti> viestitKetjusta(int ketjuId) {
         return c.queryAndCollect("SELECT * FROM Viesti"
-                + "WHERE KetjuId = " + ketjuId + " ORDER BY aika DESC;", new ViestiCollector());
+                + " WHERE KetjuId = " + ketjuId + " ORDER BY aika DESC;", new ViestiCollector());
     }
 
     public ArrayList<Viesti> viestitKetjusta(int ketjuId, boolean kaannettyAikajarjestys) {
         if (kaannettyAikajarjestys) {
             return c.queryAndCollect("SELECT * FROM Viesti"
-                    + "WHERE KetjuId = " + ketjuId + " ORDER BY aika ASC;", new ViestiCollector());
+                    + " WHERE KetjuId = " + ketjuId + " ORDER BY aika ASC;", new ViestiCollector());
         } else {
             return c.queryAndCollect("SELECT * FROM Viesti"
-                    + "WHERE KetjuId = " + ketjuId + " ORDER BY aika DESC;", new ViestiCollector());
+                    + " WHERE KetjuId = " + ketjuId + " ORDER BY aika DESC;", new ViestiCollector());
         }
     }
     public Viesti viimeisinViestiKetjusta(int KetjuId) {
@@ -51,18 +51,18 @@ public class ViestiDao {
 
     public ArrayList<Viesti> viestitAlueelta(int alueId) {
         return c.queryAndCollect("SELECT * FROM Viesti, Ketju"
-                + "WHERE Vieti.KetjuId = Ketju.ketjuId AND Ketju.AlueId = "
+                + " WHERE Vieti.KetjuId = Ketju.ketjuId AND Ketju.AlueId = "
                 + alueId + " ORDER BY aika DESC;", new ViestiCollector());
     }
 
     public ArrayList<Viesti> viestitAlueelta(int alueId, boolean kaannettyAikajarjestys) {
         if (kaannettyAikajarjestys) {
             return c.queryAndCollect("SELECT * FROM Viesti, Ketju"
-                    + "WHERE Vieti.KetjuId = Ketju.ketjuId AND Ketju.AlueId = "
+                    + " WHERE Vieti.KetjuId = Ketju.ketjuId AND Ketju.AlueId = "
                     + alueId + " ORDER BY aika ASC;", new ViestiCollector());
         } else {
             return c.queryAndCollect("SELECT * FROM Viesti, Ketju"
-                    + "WHERE Vieti.KetjuId = Ketju.ketjuId AND Ketju.AlueId = "
+                    + " WHERE Vieti.KetjuId = Ketju.ketjuId AND Ketju.AlueId = "
                     + alueId + " ORDER BY aika DESC;", new ViestiCollector());
         }
     }
