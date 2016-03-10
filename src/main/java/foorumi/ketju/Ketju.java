@@ -19,6 +19,11 @@ public class Ketju {
         return id;
     }
 
+    public int getAlueId() {
+        return alueId;
+    }
+    
+
     public String getNimi() {
         return nimi;
     }

@@ -111,6 +111,7 @@ public class Main {
             
             m.put("nimi", ketjunNimi);
             m.put("lisaysUrl", lisaysUrl);
+            m.put("alue", etsiKetjunAvulla(etsiKetjuIdnsaAvulla(ketjuId, c), c));
             m.put("viestit", vD.viestitKetjusta(ketjuId));
 
             return new ModelAndView(m, "viestit");
@@ -132,11 +133,15 @@ public class Main {
             String kayttis = req.queryParams("kayttis");
 
             ViestiDao vd = new ViestiDao(c);
-            vd.lisaaVastausviesti(ketjuId, sisalto, kayttis);
+            boolean onnistuminen = vd.lisaaVastausviesti(ketjuId, sisalto, kayttis);
 
             String linkinOsoite = "http://localhost:4567";
             if (herokuKaytossa) {
                 linkinOsoite = "https://radiant-refuge-32300.herokuapp.com";
+            }
+            if (!onnistuminen) {
+                return "Viestin lisäys epäonnistui! Syötteesi oli huono, ole hyvä ja yritä uudelleen:"
+                        + " <br/> <a href=\"" + linkinOsoite + "/viestit?ketjuId=" + ketjuId + "\">Palaa viestisivulle</a>";
             }
             return "Lisättiin  syöte: " + sisalto + " t: " + kayttis + "<br/>"
                     + "<br/> <a href=\"" + linkinOsoite + "/viestit?ketjuId=" + ketjuId + "\">Palaa viestisivulle</a>";
@@ -183,6 +188,25 @@ public class Main {
     public static ArrayList<Alue> getAlueet(DBContacter c) {
         ArrayList<Alue> alueet = c.queryAndCollect("SELECT * FROM Alue;", new AlueCollector());
         return alueet;
+    }
+    public static Alue etsiKetjunAvulla(Ketju k, DBContacter c) {
+        Alue palautettava = null;
+        for (Alue a : getAlueet(c)) {
+            if (a.getId() == k.getAlueId()) {
+                palautettava = a;
+            }
+        }
+        return palautettava;
+    }
+    public static Ketju etsiKetjuIdnsaAvulla(int ketjuid, DBContacter c) {
+        KetjuDao kd = new KetjuDao(c);
+        Ketju palautettava = null;
+        for (Ketju k : kd.kaikkiKetjut()) {
+            if (k.getId() == ketjuid) {
+                palautettava = k;
+            }
+        }
+        return palautettava;
     }
 
 }

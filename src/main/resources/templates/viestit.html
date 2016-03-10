@@ -6,7 +6,7 @@
         <div class="container">
             <ol class="breadcrumb">
                 <li><a href="/alueet">Alueet</a></li>
-                <li><a href="[Tähän alueen url]">[Tähän alueen nimi]</a></li>
+                <li><a th:href="${alue.url}"><span th:text="${alue.nimi}">alue</span></a></li>
                 <li class="active" th:text="${nimi}">Nimi</li>
             </ol>
             
