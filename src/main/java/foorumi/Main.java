@@ -109,6 +109,7 @@ public class Main {
                 }
             }
             
+            
             m.put("nimi", ketjunNimi);
             m.put("lisaysUrl", lisaysUrl);
             m.put("alue", etsiKetjunAvulla(etsiKetjuIdnsaAvulla(ketjuId, c), c));
