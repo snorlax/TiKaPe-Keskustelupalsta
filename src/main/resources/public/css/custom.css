@@ -39,3 +39,7 @@ li.panel {
 .panel-footer {
     color: #aaa;
 }
+
+.breadcrumb a {
+    font-size: 100% !important;
+}

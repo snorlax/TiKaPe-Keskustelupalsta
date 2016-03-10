@@ -65,13 +65,15 @@ public class Main {
             HashMap m = new HashMap<>();
             int alueId = Integer.parseInt(req.queryParams("alueId"));
             String alueenNimi = "";
+            
             for (Object alue : c.queryAndCollect("SELECT * FROM Alue", new AlueCollector())) {
                 Alue a = (Alue) alue;
                 if (a.getId() == alueId) {
                     alueenNimi = a.getNimi();
                 }
             }
-            m.put("kuvaus", "Alueen " + alueenNimi + " ketjut");
+            
+            m.put("nimi", alueenNimi);
             m.put("ketjut", kD.ketjutAlueelta(alueId));
 
             return new ModelAndView(m, "ketjut");
@@ -91,7 +93,7 @@ public class Main {
                 }
             }
             
-            m.put("kuvaus", "Ketjun " + ketjunNimi + " viestit");
+            m.put("nimi", ketjunNimi);
             m.put("lisaysUrl", lisaysUrl);
             m.put("viestit", vD.viestitKetjusta(ketjuId));
 

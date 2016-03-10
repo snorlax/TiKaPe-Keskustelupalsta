@@ -4,8 +4,13 @@
         <div class="container" th:include="fragments/header :: header"></div>
 
         <div class="container">
-            <h2 th:text="${kuvaus}">kuvaus</h2><br />
+            <ol class="breadcrumb">
+                <li><a href="/alueet">Alueet</a></li>
+                <li class="active" th:text="${nimi}">Nimi</li>
+            </ol>
             
+            <h2 th:text="${nimi}">Nimi</h2><br />
+
             <ul>
                 <li class="panel panel-default" th:each="ketjut: ${ketjut}">
                     <a th:href="${ketjut.url}"><span th:text="${ketjut.nimi}">ketju</span></a>

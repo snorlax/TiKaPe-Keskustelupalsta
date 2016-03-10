@@ -4,7 +4,13 @@
         <div class="container" th:include="fragments/header :: header"></div>
 
         <div class="container">
-            <h2 th:text="${kuvaus}">kuvaus</h2><br />
+            <ol class="breadcrumb">
+                <li><a href="/alueet">Alueet</a></li>
+                <li><a href="[Tähän alueen url]">[Tähän alueen nimi]</a></li>
+                <li class="active" th:text="${nimi}">Nimi</li>
+            </ol>
+            
+            <h2 th:text="${nimi}">Nimi</h2><br />
 
             <div class="panel panel-default" th:each="viestit: ${viestit}">
                 <div class="panel-heading">
