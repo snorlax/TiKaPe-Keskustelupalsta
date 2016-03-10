@@ -136,7 +136,7 @@ public class Main {
 
             String linkinOsoite = "http://localhost:4567";
             if (herokuKaytossa) {
-                linkinOsoite = "";
+                linkinOsoite = "https://radiant-refuge-32300.herokuapp.com";
             }
             return "Lisättiin  syöte: " + sisalto + " t: " + kayttis + "<br/>"
                     + "<br/> <a href=\"" + linkinOsoite + "/viestit?ketjuId=" + ketjuId + "\">Palaa viestisivulle</a>";
