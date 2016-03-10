@@ -1,12 +1,27 @@
-<h2 th:text="${kuvaus}">kuvaus</h2>
-<a href="http://localhost:4567/alueet">Palaa alkuun</a><br/>
-<i>Lisää tänne viesti kopioimalla osoitekenttään viestien perässä oleva osoite!</i>
-<ul>
-    <li th:each="viestit: ${viestit}">
-        <span th:text="${viestit.sisalto}">viesti</span>
-         t: 
-        <span th:text="${viestit.nickname}">kayttis</span>
-         (Lähetetty: <span th:text="${viestit.aika}">aika</span>)
-          Lisäysosoite: <span th:text="${viestit.lisaysUrl}">lisaysurl</span>
-    </li>
-</ul>
+<html>
+    <head th:include="fragments/head :: head"></head>
+    <body>
+        <div class="container" th:include="fragments/header :: header"></div>
+
+        <div class="container">
+            <h2 th:text="${kuvaus}">kuvaus</h2><br />
+
+            <div class="panel panel-default" th:each="viestit: ${viestit}">
+                <div class="panel-heading">
+                    <h3 class="panel-title" th:text="${viestit.nickname}">Nimi</h3>
+                </div>
+                
+                <div class="panel-body" th:text="${viestit.sisalto}">
+                    Viesti
+                </div>
+                
+                <div class="panel-footer" th:text="${viestit.aika}">Aika</div>
+            </div>
+
+            <a th:href="${lisaysUrl}" 
+               class="btn btn-primary btn-lg active" role="button">Lisää viesti</a>
+        </div>
+
+        <div class="container" th:include="fragments/footer :: footer"></div>
+    </body>
+</html>

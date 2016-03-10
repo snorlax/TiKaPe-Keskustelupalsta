@@ -1,6 +1,5 @@
 package foorumi;
 
-
 import foorumi.viesti.ViestiDao;
 import foorumi.viesti.Viesti;
 import foorumi.viesti.ViestiCollector;
@@ -14,8 +13,8 @@ import java.util.ArrayList;
 import static spark.Spark.*;
 import java.util.HashMap;
 import spark.ModelAndView;
+import spark.Spark;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
-
 
 public class Main {
 
@@ -24,14 +23,24 @@ public class Main {
         c.testaaYhteys();
         c.foreignKeytPaalle();
         System.out.println("");
-        
-        //Spark osuus alkaa
+
+        //Spark-osuus alkaa
+        //-----------------
+        //Määritellään staattisten tiedostojen sijainti
+        Spark.staticFileLocation("/public");
+
+        get("/", (req, res) -> {
+            res.redirect("/alueet");
+            
+            return "Redirecting...";
+        });
+
         get("/alueet", (req, res) -> {
             HashMap m = new HashMap<>();
             m.put("kuvaus", "Foorumin alueet");
             m.put("alueet", getAlueet(c));
-            
-            return new ModelAndView(m, "index");
+
+            return new ModelAndView(m, "alueet");
         }, new ThymeleafTemplateEngine());
 
 //        get("/ketjut", (req, res) -> {
@@ -51,8 +60,6 @@ public class Main {
 //            
 //            return new ModelAndView(m, "viestit");
 //        }, new ThymeleafTemplateEngine());
-        
-        
         get("/ketjut", (req, res) -> {
             KetjuDao kD = new KetjuDao(c);
             HashMap m = new HashMap<>();
@@ -66,26 +73,31 @@ public class Main {
             }
             m.put("kuvaus", "Alueen " + alueenNimi + " ketjut");
             m.put("ketjut", kD.ketjutAlueelta(alueId));
-            
+
             return new ModelAndView(m, "ketjut");
         }, new ThymeleafTemplateEngine());
-        
+
         get("/viestit", (req, res) -> {
             ViestiDao vD = new ViestiDao(c);
             HashMap m = new HashMap<>();
             int ketjuId = Integer.parseInt(req.queryParams("ketjuId"));
-            String ketjnNimi = "";
+            String ketjunNimi = "";
+            String lisaysUrl = "";
+            
             for (Ketju k : new KetjuDao(c).kaikkiKetjut()) {
                 if (k.getId() == ketjuId) {
-                    ketjnNimi = k.getNimi();
+                    ketjunNimi = k.getNimi();
+                    lisaysUrl = k.getLisaysUrl();
                 }
             }
-            m.put("kuvaus", "Ketjun " + ketjnNimi + " viestit");
-            m.put("viestit", vD.viestitKetjusta(ketjuId));
             
+            m.put("kuvaus", "Ketjun " + ketjunNimi + " viestit");
+            m.put("lisaysUrl", lisaysUrl);
+            m.put("viestit", vD.viestitKetjusta(ketjuId));
+
             return new ModelAndView(m, "viestit");
         }, new ThymeleafTemplateEngine());
-        
+
         get("/add", (req, res) -> {
             int ketjuId = Integer.parseInt(req.queryParams("ketjuId"));
             return "<form method=\"POST\" action=\"/add?ketjuId=" + ketjuId + "\">\n"
@@ -100,14 +112,14 @@ public class Main {
             int ketjuId = Integer.parseInt(req.queryParams("ketjuId"));
             String sisalto = req.queryParams("sisalto");
             String kayttis = req.queryParams("kayttis");
-            
+
             ViestiDao vd = new ViestiDao(c);
             vd.lisaaVastausviesti(ketjuId, sisalto, kayttis);
 
             String linkinOsoite = "http://localhost:4567";
-                return "Lisättiin  syöte: " + sisalto + " t: " + kayttis + "<br/>"
+            return "Lisättiin  syöte: " + sisalto + " t: " + kayttis + "<br/>"
                     + "<br/> <a href=\"" + linkinOsoite + "/viestit?ketjuId=" + ketjuId + "\">Palaa viestisivulle</a>";
-            
+
         });
 //        c.suljeYhteys();
 //        System.out.println("\n\nYhteys suljettu.");
@@ -146,7 +158,7 @@ public class Main {
             System.out.println("Viestin lisäys ei onnistunut :( \n");
         }
     }
-    
+
     public static ArrayList<Alue> getAlueet(DBContacter c) {
         ArrayList<Alue> alueet = c.queryAndCollect("SELECT * FROM Alue;", new AlueCollector());
         return alueet;

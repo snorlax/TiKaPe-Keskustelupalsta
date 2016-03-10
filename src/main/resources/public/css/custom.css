@@ -1,0 +1,41 @@
+body {
+    padding: 50px 0;
+}
+
+body, h1, h2, h3, a {
+    font-size: 150% !important;
+}
+
+h1, h2, h3 {
+    font-weight: bold;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li.panel {
+    padding: 15px;
+}
+
+.navbar {
+    padding: 15px 0;
+}
+
+.container {
+    max-width: 800px;
+}
+
+.panel-body {
+    padding: 15px 30px;
+}
+
+.panel-heading, .panel-footer {
+    background: none !important;
+    border: none;
+}
+
+.panel-footer {
+    color: #aaa;
+}

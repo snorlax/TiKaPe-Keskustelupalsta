@@ -1,0 +1,16 @@
+{
+    "elements": {},
+    "attributes": {
+        "th:text": {
+            "context": "h2"
+        },
+        "th:include": {
+            "context": "head"
+        },
+        "th:each": {},
+        "th:fragment": {},
+        "th:href": {
+            "context": "a"
+        }
+    }
+}

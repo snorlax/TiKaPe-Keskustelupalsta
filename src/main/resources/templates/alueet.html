@@ -2,13 +2,13 @@
     <head th:include="fragments/head :: head"></head>
     <body>
         <div class="container" th:include="fragments/header :: header"></div>
-
+        
         <div class="container">
             <h2 th:text="${kuvaus}">kuvaus</h2><br />
             
             <ul>
-                <li class="panel panel-default" th:each="ketjut: ${ketjut}">
-                    <a th:href="${ketjut.url}"><span th:text="${ketjut.nimi}">ketju</span></a>
+                <li class="panel panel-default" th:each="alueet: ${alueet}">
+                    <a th:href="${alueet.url}"><span th:text="${alueet.nimi}">Alue</span></a>
                 </li>
             </ul>
         </div>
@@ -16,4 +16,3 @@
         <div class="container" th:include="fragments/footer :: footer"></div>
     </body>
 </html>
-

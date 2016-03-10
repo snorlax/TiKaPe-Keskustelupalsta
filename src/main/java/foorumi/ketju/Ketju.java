@@ -6,11 +6,13 @@ public class Ketju {
     private String nimi;
     private int alueId;
     private String url;
+    private String lisaysUrl;
 
     public Ketju(int id, String nimi, int alueId) {
         this.id = id;
         this.nimi = nimi;
         this.alueId = alueId;
+        this.lisaysUrl = "/add?ketjuId=" + id;
     }
 
     public int getId() {
@@ -22,9 +24,12 @@ public class Ketju {
     }
 
     public String getUrl() {
-        return "http://localhost:4567/viestit?ketjuId=" + id;
+        return "/viestit?ketjuId=" + id;
     }
     
+    public String getLisaysUrl() {
+        return lisaysUrl;
+    }
 
     @Override
     public String toString() {

@@ -40,7 +40,7 @@ public class Viesti {
     }
 
     public String getLisaysUrl() {
-        return "http://localhost:4567/add?ketjuId=" + ketjuId;
+        return "/add?ketjuId=" + ketjuId;
     }
     
     

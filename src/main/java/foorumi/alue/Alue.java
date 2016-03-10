@@ -20,7 +20,7 @@ public class Alue {
     }
 
     public String getUrl() {
-        return "http://localhost:4567/ketjut?alueId=" + id;
+        return "/ketjut?alueId=" + id;
     }
     
 
