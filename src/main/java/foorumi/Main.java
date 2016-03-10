@@ -135,6 +135,9 @@ public class Main {
             vd.lisaaVastausviesti(ketjuId, sisalto, kayttis);
 
             String linkinOsoite = "http://localhost:4567";
+            if (herokuKaytossa) {
+                linkinOsoite = "";
+            }
             return "Lisättiin  syöte: " + sisalto + " t: " + kayttis + "<br/>"
                     + "<br/> <a href=\"" + linkinOsoite + "/viestit?ketjuId=" + ketjuId + "\">Palaa viestisivulle</a>";
 
