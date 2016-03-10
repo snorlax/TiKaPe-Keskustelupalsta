@@ -17,12 +17,28 @@ import spark.Spark;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
 public class Main {
-
+    private static boolean herokuKaytossa;
     public static void main(String[] args) {
-        DBContacter c = new DBContacter("jdbc:sqlite:Keskustelupalsta.db");
-        c.testaaYhteys();
+        herokuKaytossa = false;
+        
+        // asetetaan portti jos heroku antaa PORT-ympäristömuuttujan
+        if (System.getenv("PORT") != null) {
+            port(Integer.valueOf(System.getenv("PORT")));
+            herokuKaytossa = true;
+        }
+        // käytetään oletuksena paikallista sqlite-tietokantaa
+        String jdbcOsoite = "jdbc:sqlite:Keskustelupalsta.db";
+        // jos heroku antaa käyttöömme tietokantaosoitteen, otetaan se käyttöön
+        if (System.getenv("DATABASE_URL") != null) {
+            jdbcOsoite = System.getenv("DATABASE_URL");
+            herokuKaytossa = true;
+        } 
+        
+        DBContacter c = new DBContacter(jdbcOsoite);
+        //c.testaaYhteys();
         c.foreignKeytPaalle();
         System.out.println("");
+        
 
         //Spark-osuus alkaa
         //-----------------
