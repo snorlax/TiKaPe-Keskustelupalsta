@@ -56,6 +56,7 @@ public class DBContacter {
         } else {
             lauseet = sqliteLauseet();
         }
+        
 
         // "try with resources" sulkee resurssin automaattisesti lopuksi
         try (Connection conn = getConnection()) {
